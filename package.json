@@ -1,17 +1,22 @@
 {
   "name": "generator-webpack-kickoff",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a yeoman generator to start a webpack project quickly",
-  "main": "index.js",
+  "main": "generators/app/index.js",
+  "homepage": "https://alienzhou.github.io/webpack-kickoff/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alienzhou/generator-webpack-kickoff"
+  },
   "keywords": [
-    "yeaman-generator",
+    "yeoman-generator",
     "webpack",
     "scaffolding"
   ],
-  "author": "alienzhou",
+  "author": "alienzhou <alienzhou16@163.com>",
   "license": "MIT",
   "dependencies": {
     "beeper": "^2.0.0",
