@@ -1,6 +1,6 @@
 {
   "name": "generator-webpack-kickoff",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "a yeoman generator to start a webpack project quickly",
   "main": "generators/app/index.js",
   "homepage": "https://alienzhou.github.io/webpack-kickoff/",
