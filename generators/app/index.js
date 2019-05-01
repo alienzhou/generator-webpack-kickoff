@@ -18,7 +18,7 @@ const BOXEN_OPTS = {
 };
 const DEFAULT_DIR = 'webpack-app';
 const GIT_BASE = 'https://github.com/';
-const TPL_REPOSITORY = 'alienzhou/webpack-kickoff';
+const TPL_REPOSITORY = 'alienzhou/webpack-kickoff-template';
 const ORA_SPINNER = {
     "interval": 80,
     "frames": [
