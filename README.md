@@ -6,7 +6,7 @@
 
 Help you to quickly start a project based on [Webpack](https://webpack.js.org/).
 
-In my work, I usually need to
+In my work, I often need to start a tiny demo quickly to
 
 - try a npm lib by `import`
 - test/try a webpack plugin or loader
