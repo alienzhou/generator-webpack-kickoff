@@ -1,19 +1,20 @@
 # generator-webpack-kickoff
 
-[![NPM version](https://img.shields.io/npm/v/generator-webpack-kickoff.svg)](https://www.npmjs.com/package/generator-webpack-kickoff) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)   
+[![NPM version](https://img.shields.io/npm/v/generator-webpack-kickoff.svg)](https://www.npmjs.com/package/generator-webpack-kickoff) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 ## Background
 
-Help you to quickly start a project based on [Webpack](https://webpack.js.org/).
+Help you to quickly start a project based on [Webpack](https://webpack.js.org/) or [Rollup](https://rollupjs.org/).
 
 In my work, I often need to start a tiny demo quickly to
 
 - try a npm lib by `import`
 - test/try a webpack plugin or loader
 - write a demo page for some features
+- develop a library
 - ……
 
-Without configuring Wepack, `generator-webpack-kickoff` makes these more simple.
+Without configuring Wepack/Rollup, `generator-webpack-kickoff` makes these more simple.
 
 ## Install
 

@@ -16,9 +16,14 @@ const BOXEN_OPTS = {
     borderColor: 'yellow',
     borderStyle: 'round'
 };
+const APP_TYPE = {
+    webpack: 'webpack',
+    rollup: 'rollup'
+};
 const DEFAULT_DIR = 'webpack-app';
 const GIT_BASE = 'https://github.com/';
 const TPL_REPOSITORY = 'alienzhou/webpack-kickoff-template';
+const ROLLUP_TPL_REPOSITORY = 'alienzhou/rollup-kickoff-template';
 const ORA_SPINNER = {
     "interval": 80,
     "frames": [
@@ -39,11 +44,18 @@ class WebpackKickoffGenerator extends Generator {
     constructor(params, opts) {
         super(params, opts);
 
-        this.dirName = DEFAULT_DIR;
+        this.type = APP_TYPE.webpack;
+        this.dirName = this._getDefaultDir();
 
+        this._getDefaultDir = this._getDefaultDir.bind(this);
         this._askForDir = this._askForDir.bind(this);
         this._askDirFlow = this._askDirFlow.bind(this);
+        this._askForAppType = this._askForAppType.bind(this);
         this._askForOverwrite = this._askForOverwrite.bind(this);
+    }
+
+    _getDefaultDir() {
+        return `${this.type}-app`;
     }
 
     /**
@@ -104,6 +116,9 @@ class WebpackKickoffGenerator extends Generator {
             `💁 Welcome to use Generator-Webpack-Kickoff ${chalk.grey(version)}   `
         );
         messages.push(
+            chalk.yellow('You can create a Webpack/Rollup-based frontend environment.')
+        );
+        messages.push(
             chalk.grey('https://github.com/alienzhou/generator-webpack-kickoff')
         );
         messages.push(
@@ -123,12 +138,33 @@ class WebpackKickoffGenerator extends Generator {
         this._checkVersion();
     }
 
+    _askForAppType() {
+        const opts = [{
+            type: 'list',
+            name: 'type',
+            choices: [{
+                name: 'webpack (app based on webpack, webpack-cli, wds……)',
+                value: APP_TYPE.webpack
+            }, {
+                name: 'rollup (maybe have a try for developing a library)',
+                value: APP_TYPE.rollup
+            }],
+            message: 'Please choose the build-tool for your project：',
+            default: APP_TYPE.webpack
+        }];
+
+        return this.prompt(opts).then(({type}) => {
+            this.type = type;
+            this.dirName = this._getDefaultDir();
+        });
+    }
+
     _askForDir() {
         const opts = [{
             type: 'input',
             name: 'dirName',
             message: 'Please enter the directory name for your project：',
-            default: DEFAULT_DIR,
+            default: this.dirName,
             validate: dirName => {
                 if (dirName.length < 1) {
                     beeper();
@@ -178,7 +214,9 @@ class WebpackKickoffGenerator extends Generator {
         this.log('⚙  Basic configuration...');
         const done = this.async();
 
-        this._askDirFlow().then(done);
+        this._askForAppType()
+            .then(this._askDirFlow)
+            .then(done);
     }
 
     _walk(filePath, templateRoot) {
@@ -196,10 +234,10 @@ class WebpackKickoffGenerator extends Generator {
         });
     }
 
-    _downloadTemplate() {
+    _downloadTemplate(repository) {
         return new Promise((resolve, reject) => {
             const dirPath = this.destinationPath(this.dirName, '.tmp');
-            download(TPL_REPOSITORY, dirPath, err => err ? reject(err) : resolve());
+            download(repository, dirPath, err => err ? reject(err) : resolve());
         });
     }
 
@@ -208,20 +246,23 @@ class WebpackKickoffGenerator extends Generator {
      */
     writing() {
         const done = this.async();
+        const repository = this.type === APP_TYPE.webpack
+            ? TPL_REPOSITORY
+            : ROLLUP_TPL_REPOSITORY;
 
         this.log('⚙  Finish basic configuration.', chalk.green('✔'));
         this.log();
         this.log('📂 Generate the project template and configuration...');
 
         let spinner = ora({
-            text: `Download the template from ${GIT_BASE}${TPL_REPOSITORY}...`,
+            text: `Download the template from ${GIT_BASE}${repository}...`,
             spinner: ORA_SPINNER
         }).start();
-        this._downloadTemplate()
+        this._downloadTemplate(repository)
             .then(() => {
                 spinner.stopAndPersist({
                     symbol: chalk.green('   ✔'),
-                    text: `Finish downloading the template from ${GIT_BASE}${TPL_REPOSITORY}`
+                    text: `Finish downloading the template from ${GIT_BASE}${repository}`
                 });
 
                 spinner = ora({
